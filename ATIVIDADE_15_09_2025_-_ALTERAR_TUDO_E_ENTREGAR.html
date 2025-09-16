@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seu Nome | Landing Page Jovem para Estágio</title>
+  <meta name="description" content="Landing page colorida, profissional e totalmente comentada. Ideal para estudantes que desejam editar facilmente e publicar um currículo online." />
+
+  <!--
+  ==========================================================
+  GUIA DE EDIÇÃO RÁPIDA, EM LINGUAGEM DIRETA
+  ==========================================================
+  Objetivo. Criar uma página única de apresentação profissional, com visual jovem e profissional. Você vai mudar nome, cores, foto, textos, projetos e contatos, tudo em um único arquivo.
+
+  Como usar. Baixe este arquivo como index.html. Coloque na mesma pasta a sua foto, por exemplo foto.jpg. Abra index.html no navegador para ver o resultado. Edite no VS Code ou no Bloco de Notas.
+
+  O que editar primeiro.
+  1) Tema e cores. Use o seletor de tema no topo, ou troque as cores no CSS em body[data-theme="..."]
+  2) Foto. Na tag <img class="foto" src="foto.jpg"> troque o nome do arquivo. Use imagem quadrada.
+  3) Cabeçalho. Edite <h1>, <p class="subtitulo"> e os botões com seus links.
+  4) Seção Sobre. Escreva um parágrafo simples contando quem você é e o que busca.
+  5) Habilidades. Ajuste etiquetas e barras, altere o número em --pct para mudar a porcentagem.
+  6) Projetos. Duplique um cartão <article class="card projeto">, depois troque título, descrição, tecnologias e link.
+  7) Formação e Experiência. Substitua os exemplos pelos seus dados reais.
+  8) Contato. Atualize e-mail, WhatsApp, GitHub, LinkedIn e o link para seu CV.
+
+  Publicação gratuita. Envie o arquivo para um repositório no GitHub e ative o GitHub Pages nas configurações. Compartilhe o link com empresas e professores.
+  -->
+
+  <style>
+    /* =========================================
+       PALETA, TIPOGRAFIA E TEMAS COLORIDOS
+       Você pode mudar tudo apenas trocando variáveis.
+       Existem 3 temas prontos. Neon, Por do sol e Oceano.
+       Use o seletor no topo para alternar.
+    ========================================== */
+
+    :root { --fonte-base: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Helvetica Neue", sans-serif; }
+
+    /* Tema padrão ao abrir. Você pode alterar para "sunset" ou "ocean" no onload do script, se quiser. */
+    body { 
+      --c1: #1e40af;   
+      --c2: #3b82f6;   
+      --c3: #60a5fa;   
+      --c4: #93c5fd;   
+      --texto: #1e293b;
+      --cinza: #f1f5f9;
+      --borda: #cbd5e1;
+      --card-bg: #ffffff;
+      --hover-bg: rgba(59, 130, 246, 0.1);
+      --hover-btn: rgba(96, 165, 250, 0.15);
+    }
+
+    /* Tema Dark, vibrante. */
+    body[data-theme="dark"] {
+      --c1: #60a5fa;   
+      --c2: #3b82f6;   
+      --c3: #93c5fd;   
+      --c4: #bfdbfe;   
+      --texto: #f1f5f9;
+      --cinza: #172343;
+      --borda: #334155;
+      --card-bg: #14181f;
+      --hover-bg: rgba(59, 130, 246, 0.2);
+      --hover-btn: rgba(96, 165, 250, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { 
+      margin: 0;
+      padding: 0;
+      font-family: var(--fonte-base);
+      color: var(--texto);
+      /* background: linear-gradient(180deg, rgba(36, 34, 34, 0) 0%, var(--cinza) 100%); */
+      background: var(--cinza);
+      line-height: 1.6;
+    }
+
+    a { 
+      color: var(--c1); 
+      text-decoration: none; 
+    }
+
+    a:hover, a:focus { 
+      text-decoration: underline; 
+    }
+
+    .container { 
+      max-width: 1040px; 
+      margin: 0 auto; 
+      padding: 16px; 
+    }
+
+    /* Acessibilidade. Link de pular para conteúdo usando teclado. */
+    .pular-conteudo { 
+      position: absolute;
+      left: -1000px; 
+      top: -1000px; 
+    }
+
+    .pular-conteudo:focus { 
+      left: 8px; 
+      top: 8px; 
+      background: var(--c1); 
+      color: white; 
+      padding: 8px 12px; 
+      border-radius: 8px; 
+    }
+
+    /* Topo com gradiente colorido. Inclui seletor de tema. */
+    header.topo { 
+      color: white; 
+      background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 50%, var(--c3) 100%); 
+      box-shadow: 0 8px 32px rgba(30, 64, 175, 0.3); 
+    }
+
+    header .perfil { 
+      display: grid; 
+      grid-template-columns: 120px 1fr; 
+      gap: 16px; 
+      align-items: center; 
+    }
+
+    .foto { 
+      width: 120px; 
+      height: 120px; 
+      object-fit: cover; 
+      border-radius: 16px; 
+      border: 4px solid rgba(255,255,255,.9); 
+      background: #e6eef7; 
+    }
+
+    h1 { 
+      margin: 0 0 6px; 
+      font-size: 30px; 
+    }
+
+    .subtitulo { 
+      margin: 0 0 8px; 
+      opacity: .98; 
+    }
+
+    .topo-bar { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      gap: 12px; 
+      padding-bottom: 8px; 
+    }
+
+    .tema { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+      color: #fff; 
+    }
+
+    .tema select { 
+      border-radius: 10px; 
+      border: 1px solid rgba(255,255,255,.5); 
+      background: rgba(255,255,255,.15); 
+      color: #fff; 
+      padding: 8px 10px; 
+    }
+
+    nav.menu { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 12px; 
+      margin-top: 8px; 
+    }
+
+    nav.menu a { 
+      color: #f0f9ff; 
+      background: rgba(255,255,255,.14); 
+      padding: 6px 12px; 
+      border-radius: 999px; 
+      border: 1px solid rgba(255,255,255,.22); 
+    }
+
+    nav.menu a:hover { 
+      background: rgba(255,255,255,.22); 
+    }
+
+    /* Seções. */
+    main section { 
+      padding: 34px 0; 
+      border-bottom: 1px solid var(--borda); 
+    }
+
+    main section:last-of-type { 
+      border-bottom: none; 
+    }
+
+    section h2 { 
+      margin-top: 0; 
+      font-size: 24px; 
+    }
+
+    .lead { 
+      font-size: 18px; 
+    }
+
+    /* Grades e cartões. */
+    .grid { 
+      display: grid; 
+      gap: 16px; 
+    }
+
+    @media (min-width: 740px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 980px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    .card { 
+      background: var(--card-bg); 
+      border: 1px solid var(--borda); 
+      border-radius: 16px; 
+      padding: 18px; 
+      box-shadow: 0 6px 22px rgba(0,0,0,.06); 
+    }
+
+    .card h3 { 
+      margin: 0 0 8px; 
+      font-size: 18px; 
+    }
+
+    .card p { 
+      margin: 6px 0; 
+    }
+
+    .sutil { 
+      color: #475569; 
+      font-size: 14px; 
+    }
+
+    /* Etiquetas coloridas. Você pode adicionar mais sem mexer no CSS. */
+    .tags { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 8px; 
+      margin-top: 10px; 
+    }
+
+    .tag { 
+      padding: 6px 10px; 
+      border-radius: 999px; 
+      font-size: 13px; 
+      color: #0b1220; 
+      background: linear-gradient(120deg, var(--c3), var(--c4)); 
+      border: 1px solid rgba(0,0,0,.06); 
+    }
+
+    /* Barras de habilidade. Ajuste --pct para mudar a largura. */
+    .skill { 
+      margin: 12px 0 16px; 
+    }
+
+    .skill strong { 
+      display: inline-block; 
+      min-width: 130px; 
+    }
+
+    .barra { 
+      position: relative; 
+      height: 12px; 
+      background: #e2e8f0; 
+      border-radius: 999px; 
+      overflow: hidden; 
+      border: 1px solid var(--borda);
+    }
+
+    .barra::after { 
+      content: ""; 
+      display: block; 
+      height: 100%; 
+      width: calc(var(--pct, 60) * 1%); 
+      background: linear-gradient(90deg, var(--c1), var(--c2)); 
+    }
+
+    /* Botões. Um principal em gradiente e dois neutros. */
+    .botoes { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      margin-top: 10px; 
+    }
+
+    .btn { 
+      display: inline-block; 
+      padding: 10px 14px; 
+      border-radius: 10px; 
+      border: 1px solid var(--borda); 
+      font-weight: 600; 
+    }
+
+    .btn.primario { 
+      color: white; 
+      border-color: transparent; 
+      background: linear-gradient(120deg, var(--c3), var(--c4)); 
+      box-shadow: 0 8px 24px rgba(0,0,0,.12); 
+    }
+
+    .btn.secundario { 
+      background: #f9fbff; 
+      color: var(--c1); 
+    }
+
+    .btn.neutro { 
+      background: white; 
+      color: #222; 
+    }
+
+    /* Contatos. Links realçados. */
+    .contatos a {
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+      padding: 8px 10px; 
+      border: 1px solid var(--borda); 
+      border-radius: 10px; 
+      margin: 4px 6px 0 0; 
+      background: #fff; 
+    }
+
+    /* Rodapé. */
+    footer { 
+      background: var(--cinza); 
+      border-top: 1px solid var(--borda); 
+      color: #334155; 
+    }
+
+    footer .container { 
+      padding-top: 20px; 
+      padding-bottom: 20px; 
+    }
+
+    #mensagem {
+      opacity: 0;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #10b981;
+      transition: opacity 0.4s ease;
+    }
+
+    #mensagem.visivel {
+      opacity: 1;
+    }
+
+    #copiarEmail{
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    #copiarEmail:hover{
+      background: #1e40af;
+    }
+
+  </style>
+</head>
+<body data-theme="neon">
+  <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- TOPO. Inclui seletor de tema para trocar as cores sem editar o CSS. -->
+  <header class="topo">
+    <div class="container">
+      <div class="topo-bar">
+        <div class="tema">
+          <label for="tema">Tema</label>
+          <!-- Seletor. Troque para ver combinações de cores prontas. -->
+          <select id="tema" aria-label="Selecionar tema de cores">
+            <option value="dark">Dark</option>
+            <option value="null">Light</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="perfil">
+        <!-- FOTO. Troque "foto.jpg" pelo nome do seu arquivo. Use imagem quadrada. -->
+        <img class="foto" src="perfil.jpeg" alt="Foto de Seu Nome" />
+
+        <div>
+          <!-- NOME. Substitua pelo seu nome completo. -->
+          <h1>Nikolai Smith</h1>
+          <!-- OBJETIVO. Escreva sua área de interesse. -->
+          <p class="subtitulo">Full-Stack DEV, Java:Quarkus,Spring,JPA,PrimeFaces-Python,Django,Flask-PostgresSQL +3 anos de experiência</p>
+
+          <!-- BOTÕES. Atualize os links abaixo. Mantenha apenas os que fizerem sentido. -->
+          <div class="botoes">
+            <a class="btn primario" href="#contato">Falar comigo</a>
+            <a class="btn secundario" href="Profile.pdf" download>Baixar CV</a>
+            <a class="btn neutro" href="https://github.com/Nikolai-Smith" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn neutro" href="https://www.linkedin.com/in/nikolai-smith-b6790a184/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+
+          <!-- MENU DE ATALHOS. Os links navegam dentro da mesma página. -->
+          <nav class="menu" aria-label="Atalhos de navegação">
+            <a href="#sobre">Sobre</a>
+            <a href="#habilidades">Habilidades</a>
+            <a href="#projetos">Projetos</a>
+            <a href="#formacao">Formação</a>
+            <a href="#experiencia">Experiência</a>
+            <a href="#contato">Contato</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="container">
+    <!-- SOBRE. Escreva um parágrafo claro com sua apresentação. -->
+    <section id="sobre">
+      <h2>Sobre</h2>
+      <p class="lead">
+        Sou técnico em Informática pelo IFPI, atualmente sou estudante de graduação em Ciência da Computação. Trabalho no mercado de desenvolvimento a mais de 3 anos, pincipalmente com JAVA,PostgresSQL,PrimeFaces,Quarkus,JPA,Spring. Trablhei em projetos grande para o Estado do Piauí e TJPI, demonstrando proficiencia em integrações, como com o PJE,SEI,NOTÁRIO,C11,CERURBJUS,DOE,ORG.PI, entre outros. 
+      </p>
+    </section>
+
+    <!-- HABILIDADES. Etiquetas e barras de nível. Ajuste os itens e as porcentagens. -->
+    <section id="habilidades">
+      <h2>Habilidades</h2>
+
+      <div class="tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Git e GitHub</span>
+        <span class="tag">Linux</span>
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">Quarkus</span>
+        <span class="tag">Django</span>
+        <span class="tag">Linux</span>
+        <span class="tag">PrimeFaces</span>
+        <span class="tag">PostgresSQL</span>
+      </div>
+
+      <!-- Barras. Troque o número em --pct para representar seu nível atual. -->
+      <div class="skill">
+        <strong>HTML</strong>
+        <div class="barra" style="--pct: 95"></div>
+      </div>
+      <div class="skill">
+        <strong>CSS</strong>
+        <div class="barra" style="--pct: 60"></div>
+      </div>
+      <div class="skill">
+        <strong>JavaScript</strong>
+        <div class="barra" style="--pct: 30"></div>
+      </div>
+      <div class="skill">
+        <strong>Git e GitHub</strong>
+        <div class="barra" style="--pct: 70"></div>
+      </div>
+      <div class="skill">
+        <strong>Linux</strong>
+        <div class="barra" style="--pct: 70"></div>
+      </div>
+      <div class="skill">
+        <strong>Java</strong>
+        <div class="barra" style="--pct: 85"></div>
+      </div>
+      <div class="skill">
+        <strong>Quarkus</strong>
+        <div class="barra" style="--pct: 70"></div>
+      </div>
+      <div class="skill">
+        <strong>Python</strong>
+        <div class="barra" style="--pct: 70"></div>
+      </div><div class="skill">
+        <strong>Django</strong>
+        <div class="barra" style="--pct: 80"></div>
+      </div>
+      <div class="skill">
+        <strong>PrimeFaces</strong>
+        <div class="barra" style="--pct: 90"></div>
+      </div>
+      <div class="skill">
+        <strong>PostgresSQL</strong>
+        <div class="barra" style="--pct: 80"></div>
+      </div>
+    </section>
+
+    <!-- PROJETOS. Duplique um <article> para criar outro projeto. Edite título, texto, etiquetas e link. -->
+    <section id="projetos">
+      <h2>Projetos</h2>
+      <div class="grid grid-3">
+        <article class="card projeto">
+          <h3>CerurbJus</h3>
+          <p>Central de Regularização Fundiária do Poder Judiciário, celeridade,praticidade e segurança jurídica dentro do Programa Regularizar do TJPI.</p>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">PrimeFaces</span>
+            <span class="tag">PostgresSQL</span>
+          </div>
+          <p class="sutil">Link. <a href="https://cerurbjus.tjpi.jus.br/" target="_blank" rel="noopener">ver demonstração</a></p>
+        </article>
+
+        <article class="card projeto">
+          <h3>CerurbPro</h3>
+          <p>Central de Regularização Fundiária. Gestão da Rerurb desde o cadastro no aplicativo ao envio dos dados aos cartórios por meio de integração</p>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">PrimeFaces</span>
+            <span class="tag">PostgresSQL</span>
+          </div>
+          <p class="sutil">Link. <a href="https://pi-cerurb.foxinline.com" target="_blank" rel="noopener">ver demonstração</a></p>
+        </article>
+
+        <article class="card projeto">
+          <h3>Papiro</h3>
+          <p>Central de Normas do Estado do Piauí, extração normas antigas, banco com normas compiladas, criação e assinatura de novas normas, publicação na DOE, integração com SEI</p>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">PrimeFaces</span>
+            <span class="tag">PostgresSQL</span>
+          </div>
+          <p class="sutil">Link. <a href="https://www.papiro.org/" target="_blank" rel="noopener">ver demonstração</a></p>
+        </article>
+      </div>
+      <!-- Dica. Para adicionar novo projeto, copie um <article> inteiro, cole abaixo e personalize. -->
+    </section>
+
+    <!-- FORMAÇÃO. Substitua os exemplos pelos seus. -->
+    <section id="formacao">
+      <h2>Formação</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Graduação em Ciência da Computação</h3>
+          <p>Estácio de Sá. 2025, em andamento.</p>
+          <p class="sutil">Atividades. Monitoria, grupos de estudo e eventos acadêmicos.</p>
+        </div>
+        <div class="card">
+          <h3>Técnico em Informática</h3>
+          <p>IFPI. 2019, finalizado.</p>
+          <p class="sutil">Atividades. Monitoria, Projeto de extensão, líder de turma 3 anos e eventos acadêmicos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIÊNCIA. Caso não tenha estágio, descreva projetos acadêmicos e contribuições. -->
+    <section id="experiencia">
+      <h2>Experiência</h2>
+      <div class="grid grid-2">
+      <div class="card">
+        <h3>FoxInline</h3>
+        <p>Participação em equipe que desenvolveu sistemas para o Estado,Tribunal de Justiça e prefeituras.</p>
+        <p class="sutil">Período. setembro 2022 a atual.</p>
+      </div>
+      <div class="card">
+        <h3>SEGOV</h3>
+        <p>Participação em equipe que desenvolveu sistemas para Gestão de normas do Estado</p>
+        <p class="sutil">Período. dezembro 2023 a atual.</p>
+      </div>
+    </div>
+    </section>
+
+    <!-- CONTATO. Atualize e-mail, WhatsApp e perfis. O botão copia o e-mail. -->
+    <section id="contato">
+      <h2>Contato</h2>
+      <p class="lead">Envie uma mensagem por e-mail. Também estou presente no LinkedIn e no GitHub.</p>
+      <div class="contatos">
+        <!-- Troque o e-mail aqui e no texto do botão de copiar. -->
+        <a href="mailto:seunome@email.com" id="linkEmail">nikolai.smith.dev@gmail.com</a>
+        <!-- Telefone no formato internacional. Substitua o número. -->
+        <a href="https://wa.me/5586998229923" target="_blank" rel="noopener">WhatsApp. +55 86 99822-9923</a>
+        <a href="https://github.com/Nikolai-Smith" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/nikolai-smith-b6790a184/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="botoes" style="margin-top:12px;">
+        <button class="btn primario" id="copiarEmail">Copiar e-mail</button>
+        <span id="mensagem">E-mail copiado!</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Copyright &copy; <span id="ano"></span> - Todos os Direitos Reservados - Nikolai Smith - +55 (86) 99822-9923</p>
+    </div>
+  </footer>
+
+  <script>
+    // Define o ano atual no rodapé automaticamente.
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // Seletor de tema. Troca o atributo data-theme do body e grava no armazenamento local.
+    const selectTema = document.getElementById('tema');
+    const temaSalvo = localStorage.getItem('temaPreferido');
+    if (temaSalvo) {
+      document.body.setAttribute('data-theme', temaSalvo);
+      selectTema.value = temaSalvo;
+    }
+    selectTema.addEventListener('change', function(){
+      const tema = this.value;
+      document.body.setAttribute('data-theme', tema);
+      localStorage.setItem('temaPreferido', tema);
+    });
+
+    // Botão que copia o e-mail. Se mudar o e-mail visual, o script continua funcionando.
+    // document.getElementById('copiarEmail').addEventListener('click', function() {
+      // const email = document.getElementById('linkEmail').textContent.trim();
+      // navigator.clipboard.writeText(email).then(function(){
+      //   alert('E-mail copiado. Cole no seu aplicativo de e-mail para iniciar a mensagem.');
+      // });
+      const botao = document.getElementById("copiarEmail");
+      const mensagem = document.getElementById("mensagem");
+
+    botao.addEventListener("click", () => {
+      const email = document.getElementById('linkEmail').textContent.trim();
+
+      // Copia o texto para a área de transferência
+      navigator.clipboard.writeText(email).then(() => {
+        // Mostra a mensagem
+        mensagem.classList.add("visivel");
+
+        // Oculta depois de 2 segundos
+        setTimeout(() => {
+          mensagem.classList.remove("visivel");
+        }, 2000);
+      });
+    });
+  </script>
+
+  <!--
+  ORIENTAÇÕES DETALHADAS, PASSO A PASSO
+
+  Cores do tema sem tocar em CSS.
+  Use o seletor de tema no topo da página. Neon, Por do sol e Oceano. O que você escolher fica salvo no navegador e volta ao recarregar.
+
+  Cores do tema mexendo no CSS.
+  Vá até body[data-theme="neon"], body[data-theme="sunset"] e body[data-theme="ocean"]. Troque os valores de --c1 a --c4. Essas quatro cores alimentam gradientes do topo, botões e etiquetas.
+
+  Troca da foto.
+  Coloque sua imagem na mesma pasta deste HTML. Renomeie para foto.jpg, ou mantenha outro nome simples, e troque no src da tag <img class="foto" src="foto.jpg">. Prefira imagem quadrada para evitar distorções.
+
+  Edição do cabeçalho.
+  Mude o texto do <h1> com seu nome real. Reescreva a frase com seu objetivo em <p class="subtitulo">. Atualize os links dos botões. Se não tiver CV, apague o botão "Baixar CV".
+
+  Habilidades.
+  Na lista de etiquetas, adicione ou remova <span class="tag">...</span>. Nas barras, troque o número em --pct. Exemplo. style="--pct: 75".
+
+  Projetos.
+  Cada projeto é um <article class="card projeto"> dentro da seção #projetos. Para criar outro, copie um artigo inteiro, cole abaixo e atualize as informações. Inclua apenas projetos que você consegue mostrar ou explicar.
+
+  Formação e experiência.
+  Substitua os textos de exemplo pelos seus. Se ainda não tem experiência formal, descreva atividades de extensão, monitorias e trabalhos acadêmicos.
+
+  Contato.
+  Troque o e-mail, o número do WhatsApp e os links de GitHub e LinkedIn. O botão "Copiar e-mail" pega o texto que aparecer no link do e-mail, então mantenha o id="linkEmail".
+
+  Publicação no GitHub Pages.
+  Crie um repositório novo, envie este index.html e ative o GitHub Pages em Settings. Copie o link e compartilhe com recrutadores.
+
+  Boas práticas.
+  Revise a ortografia. Use frases curtas e objetivas. Evite informações que não sejam verdadeiras. Atualize a meta description no <head> para refletir seu perfil.
+  -->
+</body>
+</html>
